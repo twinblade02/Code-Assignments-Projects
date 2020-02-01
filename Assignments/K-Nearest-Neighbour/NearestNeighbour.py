@@ -21,10 +21,10 @@ def knn(X_train, X_test, k):
     # distances = np.linalg.norm(X_train - X_test)
     indices = np.argsort(distances, 0)
     distances = np.sort(distances,0)
-    
+
     return indices[0:k,:], distances[0:k,:]
 
-# Predictions 
+# Predictions
 def knn_predictions(X_train,Y_train,X_test,k=3):
     indices, distances = knn(X_train,X_test,k)
     Y_train = Y_train.flatten()
@@ -37,20 +37,22 @@ def knn_predictions(X_train,Y_train,X_test,k=3):
             temp.append(Y_train[cell])
         predictions.append(max(temp, key=temp.count))
     predictions = np.array(predictions)
-    return predictions 
+    return predictions
 
 predictions = knn_predictions(X_train, Y_train, X_test, 3)
 
-# Accuracy function , 5 fold 
+# Accuracy function , 5 fold
 def accuracy(Y_test, predictions):
     x = Y_test.flatten() == predictions.flatten()
     grade = np.mean(x)
     return np.round(grade*100,2)
 
-# Result 
+# Result
 print('DATA-51100', 'Spring 2020')
 print('Lionel Dsilva')
 print('Programming Assignment 3\n')
+
+print('# ', 'True ', 'Predictions')
 
 for x,v,z in zip(range(0,76),Y_test, predictions):
     print(x,v,z)
