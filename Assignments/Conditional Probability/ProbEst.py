@@ -11,10 +11,6 @@ X = dataset[['make', 'aspiration']]
 # Probability - aspiration and make
 Asp = X['aspiration'].value_counts() / X['aspiration'].count() * 100
 Man = (X['make'].value_counts() / X['make'].count() * 100).round(2)
-'''
-ProbTable = pd.DataFrame(Asp).append(Manufacturer) 
-X.groupby('aspiration')['make'].value_counts() / X.groupby('aspiration')['make'].count() *100
-'''
 
 # dataframe for probabilities
 Man_df = pd.DataFrame({'make': Man.index.unique(), 'make_prob': Man.values})
@@ -41,3 +37,8 @@ for make in X['make'].unique():
 print("\n")
 p_make_prob = lambda x: print("Prob(make="+x.make+") = ", x.make_prob, "%")
 Man_df.apply(p_make_prob, axis = 1)
+
+'''
+# Alternative solution
+X.groupby('aspiration')['make'].value_counts() / X.groupby('aspiration')['make'].count() *100
+'''
