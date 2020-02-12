@@ -10,18 +10,24 @@ X = dataset[['make', 'aspiration']]
 
 # Probability - aspiration and make
 Asp = X['aspiration'].value_counts() / X['aspiration'].count() * 100
-Manufacturer = X['make'].value_counts() / X['make'].count() * 100
+Man = (X['make'].value_counts() / X['make'].count() * 100).round(2)
 '''
 ProbTable = pd.DataFrame(Asp).append(Manufacturer) 
 X.groupby('aspiration')['make'].value_counts() / X.groupby('aspiration')['make'].count() *100
 '''
 
 # dataframe for probabilities
-make_prob = pd.DataFrame({'make': X['make'].unique(), 'make_P': Manufacturer})
+Man_df = pd.DataFrame({'make': Man.index.unique(), 'make_prob': Man.values})
+
+# Assignment header
+print("DATA-51100", "[Spring 2020]")
+print("Lionel Dsilva")
+print("Programming Assignment 4")
+print("\n")
 
 # conditional probability
-for asp in X['aspiration'].unique():
-    for make in X['make'].unique():
+for make in X['make'].unique():
+    for asp in X['aspiration'].unique():
         temp_df = X[X['make'] == make]
         make_count = temp_df.shape[0]
         temp_df2 = temp_df[temp_df['aspiration'] == asp]
@@ -32,5 +38,6 @@ for asp in X['aspiration'].unique():
             print("Prob(aspiration="+asp+"|make="+make+")"+" = " + str(0) + "%")
 
 # print make probability
-p = lambda x: print("Prob(make=" + x.make+") =", x.make_P, "%")
-make_prob.apply(p,axis=1)
+print("\n")
+p_make_prob = lambda x: print("Prob(make="+x.make+") = ", x.make_prob, "%")
+Man_df.apply(p_make_prob, axis = 1)
