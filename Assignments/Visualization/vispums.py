@@ -42,24 +42,55 @@ def bar_plot(ax):
     ax.set_ylabel('Thousands of Households')
     ax.set_title('Vehicles available in Households')
 
-# TAXP and VALP, scatterplot -- UNFINISHED
+
+# TAXP and VALP, scatterplot [scale TAXP values first and map function to be called in scatter]
+def convert_taxp(taxp):
+    tax_amt = []
+    taxp_dict = get_taxp_mapping_dict()
+    for i in taxp:
+        if taxp_dict.__contains__(i):
+            tax_amt.append(taxp_dict[i])
+        else:
+            tax_amt.append(np.NaN)
+    return tax_amt
+    
+def get_taxp_mapping_dict():
+    taxp_dict = {}
+    taxp_dict[1] = np.NaN
+    taxp_dict[2] = 1
+    taxp_dict[63] = 5500
+    counter = 50
+    for key in range(3,23):
+        taxp_dict[key] = counter
+        counter += 50
+    for key in range(23,63):
+        taxp_dict[key] = counter + 50
+        counter += 100
+    counter = counter - 50
+    for key in range(64,69):
+        taxp_dict[key] = counter + 1000
+        counter += 1000
+    return taxp_dict
+
 def scatterplot(ax):
-    value_df = dataset[['TAXP', 'VALP']]
-    taxp = value_df['TAXP'] * 100
     mrgp = dataset['MRGP']
     wgtp = dataset['WGTP']
-    value_df = value_df.assign(TAXP = taxp)
-    scatter = ax.scatter(value_df.VALP, value_df.TAXP, c=mrgp, s=wgtp, alpha=0.25, cmap='seismic', marker='o')
-    ax.set_title('Property Taxes vs Property Values', fontsize = 7)
-    ax.set_xlabel('Property Value ($)' , fontsize = 7)
-    ax.set_ylabel('Taxes ($)', fontsize = 7)
-    ax.set_ylim(ymin=0, ymax=11000)
-    ax.set_xlim(xmin=0, xmax=1200000)
-    cbar = plt.colorbar(scatter, ax=ax)
+    taxp = dataset['TAXP']
+    tax_amt = convert_taxp(taxp)
+    valp = dataset['VALP']
+    ax.set_xlim([0, 1200000])
+    ax.set_ylim([0, 11000])
+    map_target = ax.scatter(valp, tax_amt, c=mrgp, s=wgtp, alpha=0.25, cmap='seismic', marker='o')
+    ax.set_title('Property Taxes vs Property Values', fontsize=8)
+    ax.set_ylabel('Taxes ($)', fontsize=8)
+    ax.set_xlabel('Property Value ($)', fontsize=8)
+    ax.tick_params(axis='both', which='major', labelsize=5)
+    cbar = plt.colorbar(map_target, ax=ax)
     cbar.set_label('First Mortgage Payment (Monthly $)', fontsize='small')
     cbar.ax.tick_params(labelsize=5)
 
-# Call functions for plots
+
+# Call functions for plots and save image
 ax1 = fig.add_subplot(2,2,1)
 pie_chart(ax1)
 ax2 = fig.add_subplot(2,2,3)
@@ -68,3 +99,6 @@ ax3 = fig.add_subplot(2,2,2)
 histogram(ax3)
 ax4 = fig.add_subplot(2,2,4)
 scatterplot(ax4)
+
+plt.savefig('pums.png', dpi = 200)
+
