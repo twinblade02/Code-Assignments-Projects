@@ -1,6 +1,6 @@
 # import statements
 import pandas as pd
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import numpy as np
 
 # get data
@@ -41,6 +41,7 @@ def bar_plot(ax):
     ax.set_xlabel('# of vehicles')
     ax.set_ylabel('Thousands of Households')
     ax.set_title('Vehicles available in Households')
+
 
 # TAXP and VALP, scatterplot [scale TAXP values first and map function to be called in scatter]
 def convert_taxp(taxp):
@@ -88,6 +89,7 @@ def scatterplot(ax):
     cbar.set_label('First Mortgage Payment (Monthly $)', fontsize='small')
     cbar.ax.tick_params(labelsize=5)
 
+
 # Call functions for plots and save image
 ax1 = fig.add_subplot(2,2,1)
 pie_chart(ax1)
@@ -99,3 +101,4 @@ ax4 = fig.add_subplot(2,2,4)
 scatterplot(ax4)
 
 plt.savefig('pums.png', dpi = 200)
+
