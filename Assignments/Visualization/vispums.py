@@ -1,6 +1,6 @@
 # import statements
 import pandas as pd
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import numpy as np
 
 # get data
@@ -42,13 +42,22 @@ def bar_plot(ax):
     ax.set_ylabel('Thousands of Households')
     ax.set_title('Vehicles available in Households')
 
-'''# TAXP and VALP, scatterplot 
-value_df = dataset[['TAXP', 'VALP']]
-ax3 = fig.add_subplot(224)
-taxp = value_df['TAXP'] * 100
-value_df = value_df.assign(TAXP = taxp)
-scatter = plt.scatter(value_df.VALP, value_df.TAXP, cmap='winter', marker='o')
-cbar = plt.colorbar()'''
+# TAXP and VALP, scatterplot -- UNFINISHED
+def scatterplot(ax):
+    value_df = dataset[['TAXP', 'VALP']]
+    taxp = value_df['TAXP'] * 100
+    mrgp = dataset['MRGP']
+    wgtp = dataset['WGTP']
+    value_df = value_df.assign(TAXP = taxp)
+    scatter = ax.scatter(value_df.VALP, value_df.TAXP, c=mrgp, s=wgtp, alpha=0.25, cmap='seismic', marker='o')
+    ax.set_title('Property Taxes vs Property Values', fontsize = 7)
+    ax.set_xlabel('Property Value ($)' , fontsize = 7)
+    ax.set_ylabel('Taxes ($)', fontsize = 7)
+    ax.set_ylim(ymin=0, ymax=11000)
+    ax.set_xlim(xmin=0, xmax=1200000)
+    cbar = plt.colorbar(scatter, ax=ax)
+    cbar.set_label('First Mortgage Payment (Monthly $)', fontsize='small')
+    cbar.ax.tick_params(labelsize=5)
 
 # Call functions for plots
 ax1 = fig.add_subplot(2,2,1)
