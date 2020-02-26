@@ -30,3 +30,11 @@ hhl_dict = {1.0: 'English only', 2.0: 'Spanish', 3.0: 'Other Indo-European langu
 selected2['ACCESS'] = selected2['ACCESS'].map(access_dict).copy()
 selected2['HHL'] = selected2['HHL'].map(hhl_dict).copy()
 selected2 = selected2.dropna() # all rows with nans dropped 
+'''
+wgtp_sum = selected2['WGTP'].sum()
+selected2.groupby(['HHL', 'ACCESS'])['WGTP'].sum()
+'''
+
+# Table 3 - HINCP Quantile analysis
+selected3 = dataset[['HINCP', 'WGTP']].dropna() # drop nan values
+selected3.quantile()
