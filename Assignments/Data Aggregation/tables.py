@@ -30,6 +30,9 @@ hhl_dict = {1.0: 'English only', 2.0: 'Spanish', 3.0: 'Other Indo-European langu
 selected2['ACCESS'] = selected2['ACCESS'].map(access_dict).copy()
 selected2['HHL'] = selected2['HHL'].map(hhl_dict).copy()
 selected2 = selected2.dropna() # all rows with nans dropped 
+pd.crosstab(index= selected2['HHL'], columns = selected2['ACCESS'], 
+            values= selected2['WGTP'], aggfunc='sum', margins=True, normalize='all')
+
 '''
 wgtp_sum = selected2['WGTP'].sum()
 selected2.groupby(['HHL', 'ACCESS'])['WGTP'].sum()
