@@ -3,6 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+print("DATA 51100, Spring 2020")
+print("Group : Lionel Dsilva, Tu Le, Vinay Kumar Reddy")
+print("Programming Assignment 6")
+
 # get data
 dataset = pd.read_csv("C:/Users/ldmag/Downloads/ss13hil.csv", na_values = '')
 fig = plt.figure(dpi = 200, figsize=(15,15))
@@ -53,7 +57,7 @@ def convert_taxp(taxp):
         else:
             tax_amt.append(np.NaN)
     return tax_amt
-    
+
 def get_taxp_mapping_dict():
     taxp_dict = {}
     taxp_dict[1] = np.NaN
@@ -101,4 +105,3 @@ ax4 = fig.add_subplot(2,2,4)
 scatterplot(ax4)
 
 plt.savefig('pums.png', dpi = 200)
-
