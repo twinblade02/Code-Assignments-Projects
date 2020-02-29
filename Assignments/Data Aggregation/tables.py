@@ -33,11 +33,11 @@ selected2 = selected2.dropna() # all rows with nans dropped
 pd.crosstab(index= selected2['HHL'], columns = selected2['ACCESS'], 
             values= selected2['WGTP'], aggfunc='sum', margins=True, normalize='all')
 
-'''
-wgtp_sum = selected2['WGTP'].sum()
-selected2.groupby(['HHL', 'ACCESS'])['WGTP'].sum()
-'''
 
 # Table 3 - HINCP Quantile analysis
 selected3 = dataset[['HINCP', 'WGTP']].dropna() # drop nan values
-selected3.quantile()
+low = selected3.HINCP.quantile(q=0), selected3.HINCP.quantile(q=1/3)
+selected3.HINCP.quantile(q=2/3)
+selected3.HINCP.quantile(q=1)
+
+# found partial quantile solution
