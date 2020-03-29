@@ -38,3 +38,5 @@ probplot(x6, dist = "norm", plot = plt)
 probplot(x7, dist = "norm", plot = plt)
 probplot(x16, dist = "norm", plot = plt)
 probplot(x17, dist = "norm", plot = plt)
+
+# scatter plots and ellipse 
