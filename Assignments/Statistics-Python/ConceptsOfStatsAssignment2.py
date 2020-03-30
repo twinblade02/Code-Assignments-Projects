@@ -3,7 +3,7 @@
     import statements, read data, skewness, normal probability : run ax2, ax3, ax4 and ax5 one after another, scatter plots: ax6 and ax7 one by one
     Correlation, Boxplot: ax8 then ax9 one by one. ***
 '''
-
+# Import 
 import pandas as pd
 import numpy as np
 import seaborn as sns 
@@ -24,7 +24,7 @@ s = skew(X)
 corr = X.corr()
 
 # test for normality 
-alpha = 0.05
+alpha = 0.01
 k2, p = normaltest(X)
 for num in p:
     if num < alpha:
@@ -45,7 +45,7 @@ ax3 = probplot(x7, dist = "norm", plot = plt)
 ax4 = probplot(x16, dist = "norm", plot = plt)
 ax5 = probplot(x17, dist = "norm", plot = plt)
 
-# scatter plots and ellipse 
+# scatter plots and ellipse: Ellipse function for matplotlib too complex to implement 
 data1 = dataset[['x7','x19']]
 ax6 = sns.scatterplot(data=data1)
 data2 = dataset[['x6','x19']]
