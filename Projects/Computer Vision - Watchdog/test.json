@@ -1,0 +1,15 @@
+{
+"show_video": true,
+"use_ip_cam" : false,
+"create_image": true,
+"min_upload_seconds": 5,
+"min_motion_frames": 20,
+"camera_warmup_time": 2.5,
+"delta_thresh": 5,
+"resolution": [640,480],
+"fps": 20,
+"min_area": 700,
+"userDir": "C:/Users/ldmag/Videos",
+"resize_Width": 500,
+"nonMotionTimer": 8
+}
