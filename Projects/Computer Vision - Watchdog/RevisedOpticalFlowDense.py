@@ -35,7 +35,12 @@ h,w = (None,None)
 zeros = None
 output = None
 recording = False
-
+image_path1 = 'C:/Users/ldmag/Pictures'
+fname = datetime.datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
+image_path1 = (image_path1 + f"/{fname}.jpg")
+image_path2 = 'C:/Users/ldmag/Pictures'
+fname2 = datetime.datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
+image_path2 = (image_path2 + f"/{fname2}img.jpg")
 # tracker parameters
 #feature_params = dict(maxCorners = 30, qualityLevel = 0.3, minDistance = 7, blockSize = 10) # shi-tomasi corners
 #track_params = dict(winSize=(200,200), maxLevel = 3, criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.05)) #LK 
@@ -62,7 +67,7 @@ while True:
     flow = cv2.calcOpticalFlowFarneback(prev_gray, gray_frame, None, 0.5, 3, 15, 3, 5, 1.2, 0)
     
     mag, ang = cv2.cartToPolar(flow[:,:,0], flow[:,:,1], angleInDegrees=True)
-    hsv_mask[:,:,0] = ang/2
+    hsv_mask[:,:,0] = ang/2 # ang/2 default
     hsv_mask[:,:,2] = cv2.normalize(mag,None,0,255,cv2.NORM_MINMAX)
     bgr = cv2.cvtColor(hsv_mask, cv2.COLOR_HSV2BGR)
     dense_flow = cv2.addWeighted(prev_frame, 1, bgr, 2, 0)
@@ -151,11 +156,19 @@ while True:
 
     if conf["show_video"]:
         cv2.imshow("Feed", frame)
-        cv2.imshow('Combined view', dense_flow)
+        #cv2.imshow('Combined view', dense_flow) # only works for read videos, not live video
+        cv2.imshow('Dense Optical Flow', bgr)
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord('q'):
             break
+        elif key == ord('s'):
+            cv2.imwrite(image_path2, bgr)
+            cv2.imwrite(image_path1, frame)
+        elif key == ord('p'):
+            cv2.waitKey(-1)
+            if key == ord('q'):
+                break
    
     
 camera.release()
