@@ -15,4 +15,6 @@ If you need the data - use the link embeds in this markdown to navigate to the s
 ## IMPORTANT: Viewing the notebook:
 Since GitHub scrubs all Javascript embeddings, you won't be able to interact with or view any of the plots - instead, I recommend you use [nbviewer](https://nbviewer.jupyter.org/) to look at them. Simply paste the URL of the notebook in GitHub and nbviewer will display all outputs as intended.
 
+- Side note: Outdated notebook on nbviewer? Append "?flush_cache=true" to the end of the URL in your browser's address bar and press the 'Enter' key. This should give you the most updated version of the notebook. 
+
 Thanks for visiting!
