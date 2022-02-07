@@ -26,3 +26,7 @@ An attempt to brute force our way through the travelling salesman problem using 
 - **Video Game Sales Case Study**
 
 Project that analyses the sales of video game titles, publishers, and platforms to find trends based on total sales by regions. 
+
+- **Case Study: Examining NYC**
+
+Project uses location data and web-scraped information on neighbourhoods in NYC, and attempts to analyse venue locations and types that may be considered a good start-up option based on ranking and popularity. 
