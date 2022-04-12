@@ -17,7 +17,7 @@ The idea of the workflow is to complete the following tasks:
 - Write output into HDFS and persist.
 - Save output to S3 for redundancy.
 
-![Architecture](/images/PipelineArchitecture.png)
+![Architecture](images/PipelineArchitecture.png)
 
 All of these tasks are done through a single Airflow DAG, and a helper PySpark script.
 
@@ -26,15 +26,17 @@ All of these tasks are done through a single Airflow DAG, and a helper PySpark s
 ## Result
 After some debugging; the DAG ran successfully. I should let you know that this process is suboptimal for a couple of reasons - one is namely because I'm using a framework built for batch processing and storage and attempting to toss it into an object class storage system. We cannot control Spark's batch output naming conventions, so transferring files was a problem, especially when they constantly change. Second, Omitting Spark from this process and using HQL to extract and process data is also viable, and removes a component from the entire workflow - making it a bit easier to work with. Analytics with Hue, while limited - is more than enough for basic aggregations without using Python.
 
-![DAG Complete](/images/AirflowResult.png)
+![DAG Complete](images/AirflowResult.png)
 
 Compared to a "big data" dataset, our file is actually relatively small but it is a little interesting to know how long each task took. Spark seems to take the cake for this.
-![Task Times](/images/AirflowProcessTime.png)
+![Task Times](images/AirflowProcessTime.png)
 
 Task History:
-![History](/images/AirflowRetries.png)
+
+![History](images/AirflowRetries.png)
 
 Verifying files:
-![HUE](/images/HUE_batchOutput.png)
 
-![S3](/images/S3Verfiy.png)
+![HUE](images/HUE_batchOutput.png)
+
+![S3](images/S3Verfiy.png)
