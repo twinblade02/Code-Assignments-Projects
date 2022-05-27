@@ -25,6 +25,8 @@ A sample of a few visualizations is provided below.
 
 ![USCaseTimeline](images/US_cases_timeline.png)
 
+
 ![USVaccinations](images/US_vaccinations_timeline.png)
+
 
 ![USDeathTimeline](images/US_deaths_timeline.png)
