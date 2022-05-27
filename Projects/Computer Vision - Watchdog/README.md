@@ -9,15 +9,22 @@ Minor movements and non-vehicular movements (like debris, people and birds) cont
 I'm working on adding plate identification for now but that's a topic for another day.
 
 Motion capture:
+
 ![PotatoMan](images/PotatoMan.JPG)
 
 YOLOV3 in action:
+
+
 ![FMC](images/Classification.JPG)
 
 YOLOV3 False Positive; note reflection on the bonnet:
+
+
 ![YV3FP](images/FalsePositive.JPG)
 
 Some fun with OpenCV:
+
+
 ![InvisibleCar](images/InvisibleCar.JPG)
 
 
