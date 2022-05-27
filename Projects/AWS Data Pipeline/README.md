@@ -20,13 +20,13 @@ We then manually use Quicksight to analyze data within the Redshift cluster.
 Quicksight is able to access to the Redshift cluster and visualize charts and graphs from the data within the database (IAM access is required to avoid timeout errors).
 A sample of a few visualizations is provided below.
 
-![GIndex](images/Global_Index.png)
+![GIndex](images/Global_Index.PNG)
 
 
-![USCaseTimeline](images/US_cases_timeline.png)
+![USCaseTimeline](images/US_cases_timeline.PNG)
 
 
-![USVaccinations](images/US_vaccinations_timeline.png)
+![USVaccinations](images/US_vaccinations_timeline.PNG)
 
 
-![USDeathTimeline](images/US_deaths_timeline.png)
+![USDeathTimeline](images/US_deaths_timeline.PNG)
