@@ -1,0 +1,46 @@
+import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+
+## @params: [TempDir, JOB_NAME]
+args = getResolvedOptions(sys.argv, ['TempDir','JOB_NAME'])
+
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
+## @type: DataSource
+## @args: [database = "covid_database", table_name = "reduced_data", transformation_ctx = "datasource0"]
+## @return: datasource0
+## @inputs: []
+datasource0 = glueContext.create_dynamic_frame.from_catalog(database = "covid_database", table_name = "reduced_data", transformation_ctx = "datasource0")
+## @type: ApplyMapping
+## @args: [mapping = [("iso_code", "string", "iso_code", "string"), ("continent", "string", "continent", "string"), ("location", "string", "location", "string"), ("date", "string", "date", "date"), ("female_smokers", "string", "female_smokers", "double"), ("new_cases", "double", "new_cases", "int"), ("total_cases_per_million", "double", "total_cases_per_million", "double"), ("new_cases_per_million", "double", "new_cases_per_million", "double"), ("icu_patients", "string", "icu_patients", "int"), ("icu_patients_per_million", "string", "icu_patients_per_million", "double"), ("hosp_patients", "string", "hosp_patients", "int"), ("hosp_patients_per_million", "string", "hosp_patients_per_million", "double"), ("new_tests", "string", "new_tests", "int"), ("tests_units", "string", "tests_units", "string"), ("total_boosters", "string", "total_boosters", "int"), ("stringency_index", "double", "stringency_index", "double"), ("population", "double", "population", "int"), ("population_density", "double", "population_density", "double"), ("median_age", "double", "median_age", "double"), ("aged_65_older", "double", "aged_65_older", "double"), ("gdp_per_capita", "double", "gdp_per_capita", "double"), ("extreme_poverty", "string", "extreme_poverty", "double"), ("cardiovasc_death_rate", "double", "cardiovasc_death_rate", "double"), ("diabetes_prevalence", "double", "diabetes_prevalence", "double"), ("total_cases", "double", "total_cases", "int"), ("male_smokers", "string", "male_smokers", "double"), ("handwashing_facilities", "double", "handwashing_facilities", "double"), ("life_expectancy", "double", "life_expectancy", "double"), ("human_development_index", "double", "human_development_index", "double"), ("excess_mortality", "string", "excess_mortality", "double"), ("total_deaths", "double", "total_deaths", "int"), ("new_deaths", "double", "new_deaths", "int"), ("total_deaths_per_million", "double", "total_deaths_per_million", "double"), ("new_deaths_per_million", "double", "new_deaths_per_million", "double"), ("reproduction_rate", "double", "reproduction_rate", "double"), ("total_vaccinations", "double", "total_vaccinations", "int"), ("people_vaccinated", "double", "people_vaccinated", "int"), ("people_fully_vaccinated", "double", "people_fully_vaccinated", "int"), ("new_vaccinations", "double", "new_vaccinations", "int"), ("total_tests", "double", "total_tests", "int"), ("total_tests_per_thousand", "double", "new_tests_per_thousand", "double"), ("positive_rate", "double", "positive_rate", "double"), ("tests_per_case", "double", "tests_per_case", "double")], transformation_ctx = "applymapping1"]
+## @return: applymapping1
+## @inputs: [frame = datasource0]
+applymapping1 = ApplyMapping.apply(frame = datasource0, mappings = [("iso_code", "string", "iso_code", "string"), ("continent", "string", "continent", "string"), ("location", "string", "location", "string"), ("date", "string", "date", "date"), ("female_smokers", "string", "female_smokers", "double"), ("new_cases", "double", "new_cases", "int"), ("total_cases_per_million", "double", "total_cases_per_million", "double"), ("new_cases_per_million", "double", "new_cases_per_million", "double"), ("icu_patients", "string", "icu_patients", "int"), ("icu_patients_per_million", "string", "icu_patients_per_million", "double"), ("hosp_patients", "string", "hosp_patients", "int"), ("hosp_patients_per_million", "string", "hosp_patients_per_million", "double"), ("new_tests", "string", "new_tests", "int"), ("tests_units", "string", "tests_units", "string"), ("total_boosters", "string", "total_boosters", "int"), ("stringency_index", "double", "stringency_index", "double"), ("population", "double", "population", "int"), ("population_density", "double", "population_density", "double"), ("median_age", "double", "median_age", "double"), ("aged_65_older", "double", "aged_65_older", "double"), ("gdp_per_capita", "double", "gdp_per_capita", "double"), ("extreme_poverty", "string", "extreme_poverty", "double"), ("cardiovasc_death_rate", "double", "cardiovasc_death_rate", "double"), ("diabetes_prevalence", "double", "diabetes_prevalence", "double"), ("total_cases", "double", "total_cases", "int"), ("male_smokers", "string", "male_smokers", "double"), ("handwashing_facilities", "double", "handwashing_facilities", "double"), ("life_expectancy", "double", "life_expectancy", "double"), ("human_development_index", "double", "human_development_index", "double"), ("excess_mortality", "string", "excess_mortality", "double"), ("total_deaths", "double", "total_deaths", "int"), ("new_deaths", "double", "new_deaths", "int"), ("total_deaths_per_million", "double", "total_deaths_per_million", "double"), ("new_deaths_per_million", "double", "new_deaths_per_million", "double"), ("reproduction_rate", "double", "reproduction_rate", "double"), ("total_vaccinations", "double", "total_vaccinations", "int"), ("people_vaccinated", "double", "people_vaccinated", "int"), ("people_fully_vaccinated", "double", "people_fully_vaccinated", "int"), ("new_vaccinations", "double", "new_vaccinations", "int"), ("total_tests", "double", "total_tests", "int"), ("total_tests_per_thousand", "double", "new_tests_per_thousand", "double"), ("positive_rate", "double", "positive_rate", "double"), ("tests_per_case", "double", "tests_per_case", "double")], transformation_ctx = "applymapping1")
+## @type: SelectFields
+## @args: [paths = ["continent", "date", "total_cases_per_million", "population_density", "life_expectancy", "new_deaths_per_million", "new_vaccinations", "new_cases_per_million", "aged_65_older", "cardiovasc_death_rate", "total_vaccinations", "hosp_patients_per_million", "extreme_poverty", "diabetes_prevalence", "new_tests_per_thousand", "excess_mortality", "human_development_index", "female_smokers", "handwashing_facilities", "positive_rate", "icu_patients", "tests_units", "people_vaccinated", "icu_patients_per_million", "gdp_per_capita", "total_cases", "median_age", "hosp_patients", "new_cases", "total_deaths_per_million", "total_boosters", "stringency_index", "population", "male_smokers", "new_tests", "total_deaths", "new_deaths", "people_fully_vaccinated", "reproduction_rate", "location", "total_tests", "iso_code", "tests_per_case"], transformation_ctx = "selectfields2"]
+## @return: selectfields2
+## @inputs: [frame = applymapping1]
+selectfields2 = SelectFields.apply(frame = applymapping1, paths = ["continent", "date", "total_cases_per_million", "population_density", "life_expectancy", "new_deaths_per_million", "new_vaccinations", "new_cases_per_million", "aged_65_older", "cardiovasc_death_rate", "total_vaccinations", "hosp_patients_per_million", "extreme_poverty", "diabetes_prevalence", "new_tests_per_thousand", "excess_mortality", "human_development_index", "female_smokers", "handwashing_facilities", "positive_rate", "icu_patients", "tests_units", "people_vaccinated", "icu_patients_per_million", "gdp_per_capita", "total_cases", "median_age", "hosp_patients", "new_cases", "total_deaths_per_million", "total_boosters", "stringency_index", "population", "male_smokers", "new_tests", "total_deaths", "new_deaths", "people_fully_vaccinated", "reproduction_rate", "location", "total_tests", "iso_code", "tests_per_case"], transformation_ctx = "selectfields2")
+## @type: ResolveChoice
+## @args: [choice = "MATCH_CATALOG", database = "analytics", table_name = "analytics_public_test_table", transformation_ctx = "resolvechoice3"]
+## @return: resolvechoice3
+## @inputs: [frame = selectfields2]
+resolvechoice3 = ResolveChoice.apply(frame = selectfields2, choice = "MATCH_CATALOG", database = "analytics", table_name = "analytics_public_test_table", transformation_ctx = "resolvechoice3")
+## @type: ResolveChoice
+## @args: [choice = "make_cols", transformation_ctx = "resolvechoice4"]
+## @return: resolvechoice4
+## @inputs: [frame = resolvechoice3]
+resolvechoice4 = ResolveChoice.apply(frame = resolvechoice3, choice = "make_cols", transformation_ctx = "resolvechoice4")
+## @type: DataSink
+## @args: [database = "analytics", table_name = "analytics_public_test_table", redshift_tmp_dir = TempDir, transformation_ctx = "datasink5"]
+## @return: datasink5
+## @inputs: [frame = resolvechoice4]
+datasink5 = glueContext.write_dynamic_frame.from_catalog(frame = resolvechoice4, database = "analytics", table_name = "analytics_public_test_table", redshift_tmp_dir = args["TempDir"], transformation_ctx = "datasink5")
+job.commit()
