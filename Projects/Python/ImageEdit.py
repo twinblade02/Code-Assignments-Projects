@@ -1,6 +1,7 @@
 from PIL import Image, ImageEnhance, ImageFilter
 import os
 
+# batch transform
 def imageTrace(path,output_path):
     for f in os.listdir(path):
         img = Image.open(f"{path}/{f}")
@@ -18,6 +19,7 @@ def imageTrace(path,output_path):
         return "Output written to filepath"
 
 
+# batch transform
 def imageContour(path, output_path):
     for f in os.listdir(path):
         img = Image.open(f"{path}/{f}")
