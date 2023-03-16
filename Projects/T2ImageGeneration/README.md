@@ -8,4 +8,4 @@ The following are the dependencies for this project:
 
 Below is a generation for a very general prompt, which is something that has many different interpretations:
 
-[Generation for "Crimson Skies"](/images/Crimson_Skies.png)
+[Generation for "Crimson Skies"](images/Crimson_Skies.png)
