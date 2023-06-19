@@ -1,6 +1,7 @@
 from PIL import Image, ImageEnhance, ImageFilter
 import os
 
+# Test script for contour tracing
 # batch transform
 def imageTrace(path,output_path):
     for f in os.listdir(path):
@@ -30,7 +31,7 @@ def imageContour(path, output_path):
         edit_edges = edit_enhance.filter(ImageFilter.FIND_EDGES)
         contrast = ImageEnhance.Contrast(edit_edges)
         edit_contrast = contrast.enhance(1.5)
-        
+
         clean_name = os.path.splitext(f)[0]
 
         edit_contrast.save(f'.{output_path}/{clean_name}_edited.jpg')
