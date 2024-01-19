@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import dash
@@ -7,10 +5,12 @@ from dash import dcc
 from dash import html
 from dash import dash_table
 from dash.dependencies import Input, Output
-
+import dash_bootstrap_components as dbc
 
 # ---------------------------- # ----------------------------------# ----------------------------- #
 app = dash.Dash(__name__)
+server = app.server
+
 fall_data = pd.read_excel('FA23-standardized.xlsx')
 fall_data = fall_data.query('Department != "Naval Science" and Department != "Military Science" and Department != "Aerospace Studies"')
 spring_data = pd.read_excel('SP23 Standardized.xlsx')
@@ -20,7 +20,7 @@ clean_spring = pd.read_csv('clean_sping.csv')
 # ---------------------------- # --------------------------------- # ---------------------------- #
 
 app.layout = html.Div([
-    html.H1('Dashboard', style={'tex_align': 'center'}),
+    html.H1('Faculty Loading', style={'tex_align': 'center'}),
     dcc.Dropdown(id='file-dropdown', options=[{'label': 'Spring', 'value':'spring'},
                                               {'label': 'Fall', 'value': 'fall'}],
                                               value='spring', multi=False),
@@ -29,6 +29,11 @@ app.layout = html.Div([
                  value=fall_data.Instructor.iloc[0], multi=False),
     html.Div([
         dcc.Graph(id='enrollment-capacity-chart'),
+        dbc.Card(id='course-card', 
+                 style={'width': '18rem', 'margin': '10px', 'background-color': 'lightblue', 'outline': True}, 
+                 children = [dbc.CardHeader('Courses Taught'), 
+                             dbc.CardBody([dbc.ListGroup(id='courses-list'),
+                                           ])]),
         dcc.Graph(id='mean-courses'),
         dcc.Graph(id='instructor-courses-count'),
         dcc.Graph(id='instructor-courses-sum-department'),
@@ -42,8 +47,8 @@ app.layout = html.Div([
                                  style_table={'height': '300px', 'overflowY': 'auto'},
                                  )
                 ])
-        ])
-])
+        ], style={'backgroundColor': '#f2f2f2', 'fontFamily': 'Arial, sans-serif'})
+], style={'backgroundColor': '#f2f2f2', 'fontFamily': 'Arial, sans-serif'})
 
 
 @app.callback(
@@ -62,6 +67,7 @@ def update_instructor_dropdown(value):
 
 @app.callback(
         [Output('enrollment-capacity-chart', 'figure'),
+         Output('courses-list', 'children'),
          Output('mean-courses', 'figure'),
          Output('instructor-courses-count', 'figure'),
          Output('instructor-courses-sum-department', 'figure'),
@@ -89,12 +95,17 @@ def update_chart(selected_file, value):
     instructorTitle_courses = df.groupby(['Instructor_Title'], as_index=False)['Course_count'].sum()
     instructorTitle_Deptcourses = df.groupby(['Instructor_Title', 'Department'], as_index=False)['Course_count'].sum()
 
-    Q1 = df['Course_count'].quantile(0.25)
-    Q3 = df['Course_count'].quantile(0.75)
-    IQR = Q3 - Q1
-    lower_threshold = Q1 - 1.5 * IQR
-    upper_threshold = Q3 + 1.5 * IQR
-    outliers = df[(df['Course_count'] < lower_threshold) | (df['Course_count'] > upper_threshold)]
+    outlier_df = pd.DataFrame()
+    for dep, data in df.groupby('Department'):
+        Q1 = data['Course_count'].quantile(0.25)
+        Q3 = data['Course_count'].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_threshold = Q1 - 1.5 * IQR
+        upper_threshold = Q3 + 1.5 * IQR
+        outliers = data[(data['Course_count'] < lower_threshold) | (data['Course_count'] > upper_threshold)]
+        outlier_df = pd.concat([outlier_df, outliers])
+
+    unique_courses = filtered_df['Courses'].explode().unique()
 
     department = df.groupby('Department', as_index=False)['Sum_Enrollment', 'Sum_Capacity'].sum()
     #department['Enrollment %'] = department['Sum_Enrollment'] / department['Sum_Capacity'] * 100
@@ -114,6 +125,8 @@ def update_chart(selected_file, value):
             'barmode': 'stack'
         }
     }
+
+    course_list_Items = [dbc.ListGroupItem(course) for course in unique_courses]
 
     #course_count_figure = {
     #    'data': [
@@ -153,9 +166,9 @@ def update_chart(selected_file, value):
     enrollment_day_summary = px.bar(day_avail, x='Days', y='Enrl*', color='Department',
                                     title=f'Enrollment by day and department', barmode='stack')
     
-    outlier_table = outliers.to_dict('records')
+    outlier_table = outlier_df.to_dict('records')
 
-    return enrollment_capacity_figure, mean_courses_chart, instructor_course_assignment, instructor_department_courseSum, department_summary, enrollment_day_summary, outlier_table
+    return enrollment_capacity_figure, course_list_Items, mean_courses_chart, instructor_course_assignment, instructor_department_courseSum, department_summary, enrollment_day_summary, outlier_table
 
 if __name__ == '__main__':
     app.run(debug=True)
