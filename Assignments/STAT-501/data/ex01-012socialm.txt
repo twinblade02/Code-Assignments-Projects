@@ -1,0 +1,6 @@
+"SocialMedia"	"Users.pct."
+"Facebook"	51
+"Snapchat"	46
+"Instagram"	42
+"YouTube"	32
+"Twitter"	25
