@@ -2,3 +2,8 @@
 MLOps/MLEP-public/
 Projects/Ironhacks_Unemployment/Models/RF_v1-7.pkl
 Projects/Poly-Dash/.vscode/settings.json
+Projects/Sensor Fusion/data/train/deprecated/Drive2_ImgS1.csv
+Projects/Sensor Fusion/data/train/deprecated/Drive2_ImgS2.csv
+Projects/Sensor Fusion/data/train/S1/D1S1_Home.csv
+Projects/Sensor Fusion/data/train/S1/D1S1_ParkingGarage.csv
+Projects/Sensor Fusion/data/train/S1/D1S1_Roam.csv
