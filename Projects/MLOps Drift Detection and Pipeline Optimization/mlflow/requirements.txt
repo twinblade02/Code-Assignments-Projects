@@ -7,3 +7,5 @@ evidently==0.4.22
 scipy==1.11.4
 shap
 scikit-learn
+openpyxl
+jupyter

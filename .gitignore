@@ -13,3 +13,5 @@ Assignments/CNIT-571/A3/german.data
 Assignments/CNIT-571/sample.csv
 Assignments/CNIT-571/A4/german.data
 Projects/MLOps Drift Detection and Pipeline Optimization/.env
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_training_data.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/data/Telco-Churn.csv

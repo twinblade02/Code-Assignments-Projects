@@ -49,9 +49,11 @@ services:
     command: >
       mlflow server
       --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/mlflow 
-      --host 0.0.0.0 
+      --host 0.0.0.0
+      --port 5000 
       --serve-artifacts 
       --artifacts-destination s3://mlflow
+      --default-artifact-root s3://mlflow
     depends_on:
       - postgres
       - minio-setup
