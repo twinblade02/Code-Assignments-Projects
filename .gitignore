@@ -15,3 +15,9 @@ Assignments/CNIT-571/A4/german.data
 Projects/MLOps Drift Detection and Pipeline Optimization/.env
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_training_data.csv
 Projects/MLOps Drift Detection and Pipeline Optimization/data/Telco-Churn.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/evidently_report.html
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/feature_metadata.json
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_featureImp.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_raw_data-V2.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_test_data-V2.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_training_data-V2.csv
