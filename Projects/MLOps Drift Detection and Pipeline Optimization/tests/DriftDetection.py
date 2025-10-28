@@ -400,6 +400,87 @@ class DriftAnalysis:
             'detailed_results': drift_results
         }
 
+    def create_robust_features_for_drift(self, drift_data):
+        """
+        Create robust features in drift data to match robust model expectations
+        This mirrors the robust feature creation in your training pipeline
+        """
+        print("Creating robust features for drift simulation")
+    
+        robust_drift = drift_data.copy()
+        features_added = []
+    
+        if 'MonthlyCharges' in robust_drift.columns and 'TotalCharges' in robust_drift.columns:
+            robust_drift['monthly_total_ratio'] = robust_drift['MonthlyCharges'] / (robust_drift['TotalCharges'] + 1)
+            features_added.append('monthly_total_ratio')
+            print("Added monthly_total_ratio")
+    
+        if 'TotalCharges' in robust_drift.columns and 'tenure' in robust_drift.columns:
+            robust_drift['charge_per_month'] = robust_drift['TotalCharges'] / (robust_drift['tenure'] + 1)
+            features_added.append('charge_per_month')
+            print("Added charge_per_month")
+    
+        service_cols = ['PhoneService', 'MultipleLines', 'OnlineSecurity', 'OnlineBackup', 
+                   'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies']
+        available_services = [col for col in service_cols if col in robust_drift.columns]
+    
+        if available_services:
+            service_count = 0
+            for col in available_services:
+                service_count += (robust_drift[col] == 'Yes').astype(int)
+            robust_drift['service_engagement'] = service_count
+            features_added.append('service_engagement')
+            print(f"Added service_engagement from {len(available_services)} services")
+    
+        if 'tenure' in robust_drift.columns:
+            robust_drift['tenure_tier'] = pd.qcut(robust_drift['tenure'], 
+                                                q=5, labels=['New', 'Short', 'Medium', 'Long', 'Veteran'], 
+                                                duplicates='drop').astype(str)
+            features_added.append('tenure_tier')
+            print("Added tenure_tier")
+    
+        if 'MonthlyCharges' in robust_drift.columns:
+            robust_drift['value_tier'] = pd.qcut(robust_drift['MonthlyCharges'], 
+                                                q=4, labels=['Budget', 'Standard', 'Premium', 'Enterprise'], 
+                                            duplicates='drop').astype(str)
+            features_added.append('value_tier')
+            print("Added value_tier")
+    
+        stability_score = 0
+        if 'Contract' in robust_drift.columns:
+            stability_score += (robust_drift['Contract'] == 'Two year').astype(int) * 2
+            stability_score += (robust_drift['Contract'] == 'One year').astype(int) * 1
+    
+        if 'PaymentMethod' in robust_drift.columns:
+            auto_pay = robust_drift['PaymentMethod'].str.contains('automatic', case=False, na=False)
+            stability_score += auto_pay.astype(int)
+    
+        robust_drift['stability_score'] = stability_score
+        features_added.append('stability_score')
+        print("Added stability_score")
+    
+        print(f"Total robust features added: {len(features_added)}")
+        print(f"Robust drift data shape: {robust_drift.shape}")
+    
+        return robust_drift
+
+    def create_drift_simulation_with_robust_features(self, strength):
+        print(f"Creating drift simulation with robust features (strength: {strength})")
+    
+    # Use your existing drift simulation method
+        drift_data, drift_labels = self.create_drift_simulation(strength)
+    
+        if drift_data is None:
+            print("Failed to create base drift simulation")
+            return None, None
+    
+    # Add robust features to drift data
+        robust_drift_data = self.create_robust_features_for_drift(drift_data)
+    
+        print(f"Robust drift simulation complete: {robust_drift_data.shape}")
+    
+        return robust_drift_data, drift_labels
+
 def run_complete_analysis():
 
     print("Starting Evidently Analysis")
