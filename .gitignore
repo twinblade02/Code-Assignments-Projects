@@ -21,3 +21,5 @@ Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_featureI
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_raw_data-V2.csv
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_test_data-V2.csv
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_training_data-V2.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_raw_test-V2.csv
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/drift-reports/evidently_report-V2.html
