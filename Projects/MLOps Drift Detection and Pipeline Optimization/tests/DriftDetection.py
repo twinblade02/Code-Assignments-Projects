@@ -331,9 +331,6 @@ class DriftAnalysis:
             return {'error': f'Extraction failed: {e}'}
 
     def _fallback_analysis(self, drift_data):
-        """
-        Fallback analysis using statistical tests
-        """
         print("Using fallback analysis.")
         
         from scipy.stats import ks_2samp, chi2_contingency
@@ -401,14 +398,20 @@ class DriftAnalysis:
         }
 
     def create_robust_features_for_drift(self, drift_data):
-        """
-        Create robust features in drift data to match robust model expectations
-        This mirrors the robust feature creation in your training pipeline
-        """
         print("Creating robust features for drift simulation")
     
         robust_drift = drift_data.copy()
         features_added = []
+
+        #if 'SeniorCitizen' not in robust_drift.columns:
+        #    print("Adding missing SeniorCitizen column")
+        #    robust_drift['SeniorCitizen'] = np.random.choice([0, 1], size=len(robust_drift), p=[0.84, 0.16])
+        #    print("Added SeniorCitizen")
+      
+        #if 'OnlineBackup' not in robust_drift.columns:
+        #   print("Adding missing OnlineBackup column")
+        #    robust_drift['OnlineBackup'] = np.random.choice(['Yes', 'No', 'No internet service'], size=len(robust_drift), p=[0.35, 0.45, 0.20])
+        #    print("Added OnlineBackup")
     
         if 'MonthlyCharges' in robust_drift.columns and 'TotalCharges' in robust_drift.columns:
             robust_drift['monthly_total_ratio'] = robust_drift['MonthlyCharges'] / (robust_drift['TotalCharges'] + 1)
@@ -498,7 +501,7 @@ def run_complete_analysis():
             print("Cannot proceed without baseline data. Run baseline experiment first!")
             return
         
-        drift_data, drift_labels = analyzer.create_drift_simulation("covariate", 0.5)
+        drift_data, drift_labels = analyzer.create_drift_simulation(0.8)
         if drift_data is None:
             return
         
