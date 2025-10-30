@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:15
+    container_name: mlflow-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,9 +11,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   minio:
-    image: quay.io/minio/minio
+    image: minio/minio:latest
+    container_name: mlflow-minio
     ports:
       - 9000:9000
       - 9001:9001
@@ -23,9 +30,15 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 10    
 
   minio-setup:
-    image: quay.io/minio/mc
+    image: minio/mc:latest
+    container_name: mlflow-minio-bucket
     depends_on:
       - minio
     volumes:
@@ -35,6 +48,7 @@ services:
     environment:
       - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
       - MINIO_ROOT_PASSWORD=${MINIO_SECRET_ACCESS_KEY}
+    restart: "no"
 
   mlflow:
     image: mlflow_server
@@ -48,12 +62,11 @@ services:
       - MLFLOW_S3_IGNORE_TLS=true
     command: >
       mlflow server
-      --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/mlflow 
+      --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/mlflow 
       --host 0.0.0.0
       --port 5000 
       --serve-artifacts 
-      --artifacts-destination s3://mlflow
-      --default-artifact-root s3://mlflow
+      --artifacts-destination s3://mlflow/
     depends_on:
       - postgres
       - minio-setup
