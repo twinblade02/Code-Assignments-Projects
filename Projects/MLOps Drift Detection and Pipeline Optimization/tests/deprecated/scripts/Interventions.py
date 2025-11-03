@@ -38,7 +38,7 @@ class DriftInterventions:
             return False
             
         # Generate drift data
-        self.drift_data, self.drift_labels = drift_analyzer.create_drift_simulation(0.8)
+        self.drift_data, self.drift_labels = drift_analyzer.create_drift_simulation(0.5) # need to change this value each time we want to change strength
         
         if self.drift_data is None:
             print("Failed to generate drift data!")
@@ -177,7 +177,7 @@ def run_intervention_testing():
     
     # Set up MLflow
     mlflow.set_tracking_uri("http://localhost:5000")
-    mlflow.set_experiment("telco-base-interventions")
+    mlflow.set_experiment("base-interventions")
     
     # Load baseline and generate drift
     if not tester.load_baseline_and_drift():
