@@ -23,3 +23,13 @@ Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_test_dat
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_training_data-V2.csv
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/baseline_raw_test-V2.csv
 Projects/MLOps Drift Detection and Pipeline Optimization/tests/drift-reports/evidently_report-V2.html
+Projects/MLOps Drift Detection and Pipeline Optimization/.docker-compose.yaml.un~
+Projects/MLOps Drift Detection and Pipeline Optimization/docker-compose.yaml~
+Projects/MLOps Drift Detection and Pipeline Optimization/mlflow/Dockerfile~
+Projects/MLOps Drift Detection and Pipeline Optimization/mlflow/requirements.txt~
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/__pycache__/AdaptiveDDLA.cpython-311.pyc
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/__pycache__/DriftDetection.cpython-311.pyc
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/AdaptiveDDLA.py
+*.csv
+*.json
+*.png
