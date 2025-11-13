@@ -33,3 +33,13 @@ Projects/MLOps Drift Detection and Pipeline Optimization/tests/AdaptiveDDLA.py
 *.csv
 *.json
 *.png
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/ddla_experiment.py
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/dt_baseline_fraction.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/dt_ddla_detector.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/dt_detector_assets.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/dt_feature_names.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/hdbscan_baseline_ratio.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/hdbscan_detector.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/hdbscan_detector_assets.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/hdbscan_error_ids.pkl
+Projects/MLOps Drift Detection and Pipeline Optimization/tests/preprocessor.pkl
